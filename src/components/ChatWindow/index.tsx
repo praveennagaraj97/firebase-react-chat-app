@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Jumbotron } from "react-bootstrap";
+import firebase from "firebase/app";
 
 import { firestore } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -10,9 +11,10 @@ export default function ChatWindow({ user = { uid: "" } }) {
   const [text, setText] = useState("");
   const [vendor, setvendor] = useState("");
   const messagesRef = firestore.collection("messages");
-  const query = messagesRef.where("connectbtw", "==", `${user.uid}&${vendor}`);
+  let query = messagesRef.where("connectbtw", "==", `${user.uid}&${vendor}`);
+  query = messagesRef.orderBy("createdAt");
 
-  const [messages] = useCollectionData(query) as any;
+  const [messages] = useCollectionData(query, { idField: "id" }) as any;
 
   useEffect(() => {
     if (vendor === user.uid) {
@@ -28,7 +30,7 @@ export default function ChatWindow({ user = { uid: "" } }) {
 
     const message: Message = {
       text,
-      createdAt: Date.now(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       connectbtw: `${user.uid}&${vendor}`,
       from: user.uid,
       to: vendor,
@@ -54,24 +56,22 @@ export default function ChatWindow({ user = { uid: "" } }) {
           required
         />
         <div className="display-window">
-          <div className="display-window">
-            {messages &&
-              messages.map((each: any, i: number) => {
-                if (each.from === user.uid) {
-                  return (
-                    <div className="sent" key={i}>
-                      {each.text}
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div className="recieved" key={i}>
-                      {each.text}
-                    </div>
-                  );
-                }
-              })}
-          </div>
+          {messages &&
+            messages.map((each: any, i: number) => {
+              if (each.from === user.uid) {
+                return (
+                  <div className="sent" key={i}>
+                    {each.text}
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="recieved" key={i}>
+                    {each.text}
+                  </div>
+                );
+              }
+            })}
         </div>
         <div className="msg-in-and-send">
           <input
@@ -92,7 +92,7 @@ export default function ChatWindow({ user = { uid: "" } }) {
 
 interface Message {
   text: string;
-  createdAt: number;
+  createdAt: any;
   connectbtw: string;
   from: string;
   to: string;
