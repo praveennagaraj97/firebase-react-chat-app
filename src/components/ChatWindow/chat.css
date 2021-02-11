@@ -1,0 +1,45 @@
+.chat-window {
+  background-image: linear-gradient(#fff, rgb(243, 176, 176));
+  width: 360px;
+  margin: auto;
+  height: 360px;
+  padding: 0px;
+  position: relative;
+  top: 30px;
+}
+
+.msg-in-and-send {
+  position: absolute;
+  bottom: 0;
+}
+
+.msg-in-and-send > input {
+  border: none;
+  outline: none;
+  width: 300px;
+  border-radius: 8px 0 0 8px;
+  padding: 2px;
+}
+
+.msg-in-and-send > button {
+  border: none;
+  outline: none;
+  width: 60px;
+  border-radius: 0 8px 8px 0;
+  padding: 2px;
+}
+
+.display-window {
+  height: 100%;
+  overflow: auto;
+}
+
+.sent {
+  padding: 5px;
+  text-align: left;
+}
+
+.recieved {
+  padding: 5px;
+  text-align: right;
+}

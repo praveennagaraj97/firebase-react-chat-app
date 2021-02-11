@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap");
+
+.header {
+  padding: 7px;
+  font-family: "Dancing Script", cursive;
+  background-image: linear-gradient(rgb(255, 202, 202), #fff);
+  display: flex;
+  justify-content: space-between;
+}
+
+.header button {
+  height: 38px;
+}
