@@ -12,7 +12,6 @@ export default function ChatWindow({ user = { uid: "" } }) {
   const [vendor, setvendor] = useState("");
   const messagesRef = firestore.collection("messages");
   let query = messagesRef.where("connectbtw", "==", `${user.uid}&${vendor}`);
-  query = messagesRef.orderBy("createdAt");
 
   const [messages] = useCollectionData(query, { idField: "id" }) as any;
 
@@ -57,21 +56,23 @@ export default function ChatWindow({ user = { uid: "" } }) {
         />
         <div className="display-window">
           {messages &&
-            messages.map((each: any, i: number) => {
-              if (each.from === user.uid) {
-                return (
-                  <div className="sent" key={i}>
-                    {each.text}
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="recieved" key={i}>
-                    {each.text}
-                  </div>
-                );
-              }
-            })}
+            messages
+              ?.sort((a: any, b: any) => a.createdAt - b.createdAt)
+              .map((each: any, i: number) => {
+                if (each.from === user.uid) {
+                  return (
+                    <div className="sent" key={i}>
+                      {each.text}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="recieved" key={i}>
+                      {each.text}
+                    </div>
+                  );
+                }
+              })}
         </div>
         <div className="msg-in-and-send">
           <input
