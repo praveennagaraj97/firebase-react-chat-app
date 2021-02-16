@@ -14,13 +14,13 @@ interface Settings {
 }
 
 const firebaseSettings: Settings = {
-  apiKey: "AIzaSyA9BzWL4uvw7pu8VXziVhV_xh81JLuVmRc",
-  authDomain: "fir-88ce0.firebaseapp.com",
-  databaseURL: "https://fir-88ce0.firebaseio.com",
-  projectId: "fir-88ce0",
-  storageBucket: "fir-88ce0.appspot.com",
-  messagingSenderId: "434021351212",
-  appId: "1:434021351212:web:4a60b1bf2c235c16bfb689",
+  apiKey: ,
+  authDomain: ,
+  databaseURL: ,
+  projectId: ,
+  storageBucket: ,
+  messagingSenderId: ,
+  appId: ,
 };
 
 const firebaseApp = firebase.initializeApp(firebaseSettings);
